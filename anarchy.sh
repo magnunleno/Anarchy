@@ -28,7 +28,7 @@ HOSTN=Arch
 LOCALE=America/Sao_Paulo
 
 # Senha de Root do sistema após a instalação
-ROOT_PASSWD=123456
+ROOT_PASSWD=123
 
 ########## Variáveis Para Particionamento do Disco
 # ATENÇÃO, este script apaga TODO o conteúdo do disco especificado em $HD.
@@ -151,15 +151,14 @@ function configurando_pacman
 {
 	echo "Configurando pacman"
 	cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bkp
-	sed "s/^Ser/#Ser/" /etc/pacman.d/mirrorlist > /tmp/mirrors
-	sed '/Brazil/{n;s/^#//}' /tmp/mirrors > /etc/pacman.d/mirrorlist
+	sed -i "s/^Ser/#Ser/" /etc/pacman.d/mirrorlist
+	sed -i '/Brazil/{n;s/^#//}' /etc/pacman.d/mirrorlist
 
 	if [ "$(uname -m)" = "x86_64" ]
 	then
 		cp /etc/pacman.conf /etc/pacman.conf.bkp
 		# Adiciona o Multilib 
-		sed '/^#\[multilib\]/{s/^#//;n;s/^#//;n;s/^#//}' /etc/pacman.conf > /tmp/pacman
-		mv /tmp/pacman /etc/pacman.conf
+		sed -i '/^#\[multilib\]/{s/^#//;n;s/^#//;n;s/^#//}' /etc/pacman.conf
 
 	fi
 }
@@ -201,8 +200,7 @@ arch-chroot /mnt << EOF
 # Configura hostname
 echo $HOSTN > /etc/hostname
 cp /etc/hosts /etc/hosts.bkp
-sed 's/localhost$/localhost '$HOSTN'/' /etc/hosts > /tmp/hosts
-mv /tmp/hosts /etc/hosts
+sed -i 's/localhost$/localhost '$HOSTN'/' /etc/hosts
 
 # Configura layout do teclado
 echo 'KEYMAP='$KEYBOARD_LAYOUT > /etc/vconsole.conf
@@ -211,8 +209,7 @@ echo 'FONT_MAP=' >> /etc/vconsole.conf
 
 # Configura locale.gen
 cp /etc/locale.gen /etc/locale.gen.bkp
-sed 's/^#'$LANGUAGE'/'$LANGUAGE/ /etc/locale.gen > /tmp/locale
-mv /tmp/locale /etc/locale.gen
+sed -i 's/^#'$LANGUAGE'/'$LANGUAGE/ /etc/locale.gen
 locale-gen
 
 # Configura locale.conf
@@ -227,9 +224,9 @@ echo $LOCALE > /etc/timezone
 hwclock --systohc --utc
 
 # Configura rede (DHCP via eth0)
-cp /etc/rc.conf /etc/rc.conf.bkp
-sed 's/^# interface=/interface=eth0/' /etc/rc.conf > /tmp/rc.conf
-mv /tmp/rc.conf /etc/rc.conf
+# systemctl enable dhcpcd@eth0.service
+# Thanks to SystemD latest update the interfaces are now
+# receiveing unpredictable names
 
 # Configura ambiente ramdisk inicial
 mkinitcpio -p linux
