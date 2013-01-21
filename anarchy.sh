@@ -1,7 +1,6 @@
 #!/bin/bash
 # encoding: utf-8
 
-
 #################################################
 #            Warning                            #
 #                                               #
@@ -15,7 +14,6 @@
 # Happy hacking and long live Rock n' Roll      #
 #                                               #
 #################################################
-
 
 
 ##################################################
@@ -71,7 +69,7 @@ HOME_START=$ROOT_END
 ##################################################
 #           functions                            #
 ##################################################
-function inicializa_hd
+function initialize_harddrive
 {
     echo "Initializing HD"
     # Setting the type of partition table (Skipping errors)
@@ -84,7 +82,7 @@ function inicializa_hd
     parted -s $HD rm 4 &> /dev/null
 }
 
-function particiona_hd
+function make_partitions
 {
     ERR=0
     # Create Boot partition
@@ -110,7 +108,7 @@ function particiona_hd
     fi
 }
 
-function cria_fs
+function make_fs
 {
     ERR=0
     # Formats root, boot and home partitions to the specified File System
@@ -131,7 +129,7 @@ function cria_fs
     fi
 }
 
-function monta_particoes
+function mount_partitions
 {
     ERR=0
     echo "Mounting partitions"
@@ -150,7 +148,7 @@ function monta_particoes
     fi
 }
 
-function configurando_pacman
+function configure_pacman
 {
     echo "Setting Pacman"
     cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bkp
@@ -166,7 +164,7 @@ function configurando_pacman
     fi
 }
 
-function instalando_sistema
+function install_system
 {
     ERR=0
     echo "Running pacstrap base base-devel"
@@ -189,14 +187,14 @@ function instalando_sistema
 loadkeys $KEYBOARD_LAYOUT
 
 #### Partitioning
-inicializa_hd
-particiona_hd
-cria_fs
-monta_particoes
+initialize_harddrive
+make_partitions
+make_fs
+mount_partitions
 
 #### Installing
-configurando_pacman
-instalando_sistema
+configure_pacman
+install_system
 
 #### Chroot and configure the base system
 arch-chroot /mnt << EOF
