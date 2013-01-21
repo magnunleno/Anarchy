@@ -1,6 +1,8 @@
 # TODO: Check for the pkg squashfs-tools
 # TODO: Check for the pkg cdrkit
 
+ISO=archlinux-2013.01.04-dual.iso
+
 BUILD_DIR=./build
 CUSTOM_ISO_DIR=$(BUILD_DIR)/custom_iso
 ISO_MOUNT_DIR=$(BUILD_DIR)/mnt/archiso
@@ -95,7 +97,7 @@ _base:
 	@echo " OK"
 
 	@echo "Mounting ISO"
-	sudo mount -t iso9660 -o loop ./archlinux-2013.01.04-dual.iso $(ISO_MOUNT_DIR)
+	sudo mount -t iso9660 -o loop ./$(ISO) $(ISO_MOUNT_DIR)
 	@echo -n "Coping files..."
 	@cp -a $(ISO_MOUNT_DIR)/* $(CUSTOM_ISO_DIR)
 	@echo " OK"
