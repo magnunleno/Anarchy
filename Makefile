@@ -1,7 +1,5 @@
-# TODO: Check for the pkg squashfs-tools
-# TODO: Check for the pkg cdrkit
-
-ISO=archlinux-2013.01.04-dual.iso
+UNSQUASHFS := $(shell which unsquashfs)
+GENISOIMAGE := $(shell which genisoimage)
 
 BUILD_DIR=./build
 CUSTOM_ISO_DIR=$(BUILD_DIR)/custom_iso
@@ -80,6 +78,9 @@ build-64: _base
 
 
 iso:
+ifeq (GENISOIMAGE,)
+	$(error genisoimage command not found! Please install the cdrkit package.)
+endif
 	@echo "#############################"
 	@echo "Building new ISO..."
 
@@ -91,18 +92,23 @@ iso:
 
 
 _base:
+ifeq (UNSQUASHFS,)
+	$(error unsquashfs command not found! Please install the squashfs-tools package.)
+endif
+ifeq ($(ISO),)
+	$(error Please specify the Arch Linux ISO full path.)
+endif
 	@echo -n "Building base dirs..."
 	@mkdir -p $(ISO_MOUNT_DIR)
 	@mkdir -p $(CUSTOM_ISO_DIR)
 	@echo " OK"
 
 	@echo "Mounting ISO"
-	sudo mount -t iso9660 -o loop ./$(ISO) $(ISO_MOUNT_DIR)
+	@sudo mount -t iso9660 -o loop ./$(ISO) $(ISO_MOUNT_DIR)
 	@echo -n "Coping files..."
 	@cp -a $(ISO_MOUNT_DIR)/* $(CUSTOM_ISO_DIR)
 	@echo " OK"
 	@echo ""
-
 
 clean:
 	@echo "Cleaning files..."
