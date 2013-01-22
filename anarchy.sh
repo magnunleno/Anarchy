@@ -15,56 +15,7 @@
 #                                               #
 #################################################
 
-
-##################################################
-#           Variables                            #
-##################################################
-# Hostname
-HOSTN=Arch
-
-# Time zone
-# Available time zones and subzones can be found in the /usr/share/zoneinfo/<Zone>/<SubZone> directories. 
-LOCALE=America/Sao_Paulo
-
-# Root password
-ROOT_PASSWD=123
-
-########## Variables To Disk Partitioning
-# WARNING, this script delete ALL the contents of the disc specified in $ HD.
-HD=/dev/sda
-# Boot partition size: /boot
-BOOT_SIZE=200
-# Root partition size: /
-ROOT_SIZE=10000
-# Swap partition size:
-SWAP_SIZE=2000
-# The / home partition will occupy the remaining free disk space
-
-# File Systems
-BOOT_FS=ext4
-HOME_FS=ext4
-ROOT_FS=ext4
-
-# Extra packages (not required)
-EXTRA_PKGS='vim'
-
-# Keyboard Layout
-KEYBOARD_LAYOUT=br-abnt2
-
-# Language
-LANGUAGE=pt_BR
-
-######## Auxiliary variables. SHOULD NOT BE CHANGED
-BOOT_START=1
-BOOT_END=$(($BOOT_START+$BOOT_SIZE))
-
-SWAP_START=$BOOT_END
-SWAP_END=$(($SWAP_START+$SWAP_SIZE))
-
-ROOT_START=$SWAP_END
-ROOT_END=$(($ROOT_START+$ROOT_SIZE))
-
-HOME_START=$ROOT_END
+source anarchy.conf
 
 ##################################################
 #           functions                            #
@@ -196,48 +147,14 @@ mount_partitions
 configure_pacman
 install_system
 
+### Copy necessary files
+cp anarchy.conf /mnt/
+cp anarchy-post.sh /mnt/
+
 #### Chroot and configure the base system
 arch-chroot /mnt << EOF
-# Hostname
-echo $HOSTN > /etc/hostname
-cp /etc/hosts /etc/hosts.bkp
-sed -i 's/localhost$/localhost '$HOSTN'/' /etc/hosts
-
-# Keybord Layout
-echo 'KEYMAP='$KEYBOARD_LAYOUT > /etc/vconsole.conf
-echo 'FONT=lat0-16' >> /etc/vconsole.conf
-echo 'FONT_MAP=' >> /etc/vconsole.conf
-
-# Locale locale.gen
-cp /etc/locale.gen /etc/locale.gen.bkp
-sed -i 's/^#'$LANGUAGE'/'$LANGUAGE/ /etc/locale.gen
-locale-gen
-
-# Locale locale.conf
-export LANG=$LANGUAGE'.utf-8'
-echo 'LANG='$LANGUAGE'.utf-8' > /etc/locale.conf
-echo 'LC_COLLATE=C' >> /etc/locale.conf
-echo 'LC_TIME='$LANGUAGE'.utf-8' >> /etc/locale.conf
-
-# Time zone
-ln -s /usr/share/zoneinfo/$LOCALE /etc/localtime
-echo $LOCALE > /etc/timezone
-hwclock --systohc --utc
-
-# Setting Network (DHCP via eth0)
-# systemctl enable dhcpcd@eth0.service
-# Thanks to SystemD latest update the interfaces are now
-# receiveing unpredictable names
-
-# Create an initial ramdisk environment
-mkinitcpio -p linux
-
-# Install and setting up GRUB Legacy
-grub-install /dev/sda
-grub-mkconfig -o /boot/grub/grub.cfg
-
-# Setting root password
-echo -e $ROOT_PASSWD"\n"$ROOT_PASSWD | passwd
+./anarchy-post.sh
+rm anarchy-post.sh anarchy.conf
 EOF
 
 echo "Umounting partitions"
