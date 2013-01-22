@@ -39,8 +39,6 @@ echo "Configuring interfaces..."
 ETH_NAME=`udevadm test-builtin net_id /sys/class/net/eth0 2> /dev/null | grep NAME_PATH | cut -d= -f2`
 cp /etc/network.d/examples/ethernet-dhcp /etc/network.d/
 sed -i "s/eth0/$ETH_NAME/" /etc/network.d/ethernet-dhcp
-sed -i "s/eth0/$ETH_NAME/" /etc/conf.d/netcfg 
-echo 'AUTO_PROFILES=("ethernet-dhcp")' >> /etc/conf.d/netcfg
 
 echo "Enabling Netdf@ethernet-dhcp..."
 systemctl enable netcfg@ethernet-dhcp.service
