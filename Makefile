@@ -11,6 +11,8 @@ ROOT_IMG64=$(BUILD_DIR)/root-image-x86_64
 ROOTFS_32=$(BUILD_DIR)/mnt/rootfs_32
 ROOTFS_64=$(BUILD_DIR)/mnt/rootfs_64
 
+LABEL=ANARCHY_$(shell date +%Y%m)
+
 build-all: _base build-32 build-64
 
 build-32: _base
@@ -22,12 +24,14 @@ build-32: _base
 	@cp $(CUSTOM_ISO_DIR)/arch/i686/root-image.fs.sfs $(ROOT_IMG32)
 	@echo -n "Unsquasing root image..."
 	@cd $(ROOT_IMG32) && unsquashfs root-image.fs.sfs > /dev/null
+	@cd $(ROOT_IMG32) && rm root-image.fs.sfs
 	@echo " OK"
 
 	@echo "Mounting Root Image..."
 	@sudo mount $(ROOT_IMG32)/squashfs-root/root-image.fs $(ROOTFS_32)
 	@echo -n "Copying files..."
 	@sudo cp anarchy.sh $(ROOTFS_32)/root/
+	@sudo cp anarchy.sh $(ROOTFS_32)/home/arch/
 	@echo " OK"
 
 	@echo "Umounting image..."
@@ -54,12 +58,14 @@ build-64: _base
 	@cp $(CUSTOM_ISO_DIR)/arch/x86_64/root-image.fs.sfs $(ROOT_IMG64)
 	@echo -n "Unsquasing root image..."
 	@cd $(ROOT_IMG64) && unsquashfs root-image.fs.sfs > /dev/null
+	@cd $(ROOT_IMG64) && rm root-image.fs.sfs
 	@echo " OK"
 
 	@echo "Mounting Root Image..."
 	@sudo mount $(ROOT_IMG64)/squashfs-root/root-image.fs $(ROOTFS_64)
 	@echo -n "Copying files..."
 	@sudo cp anarchy.sh $(ROOTFS_64)/root/
+	@sudo cp anarchy.sh $(ROOTFS_64)/home/arch/
 	@echo " OK"
 
 	@echo "Umounting image..."
@@ -83,8 +89,14 @@ ifeq (GENISOIMAGE,)
 endif
 	@echo "#############################"
 	@echo "Building new ISO..."
+	@sed -i 's/ARCH_[0-9]\{6\}/$(LABEL)/' $(CUSTOM_ISO_DIR)/arch/boot/syslinux/archiso_sys64.cfg
+	@sed -i 's/ARCH_[0-9]\{6\}/$(LABEL)/' $(CUSTOM_ISO_DIR)/arch/boot/syslinux/archiso_sys32.cfg
+	@sed -i 's/ARCH_[0-9]\{6\}/$(LABEL)/' $(CUSTOM_ISO_DIR)/arch/boot/syslinux/archiso_pxe64.cfg
+	@sed -i 's/ARCH_[0-9]\{6\}/$(LABEL)/' $(CUSTOM_ISO_DIR)/arch/boot/syslinux/archiso_pxe32.cfg
+	@sed -i 's/ARCH_[0-9]\{6\}/$(LABEL)/' $(CUSTOM_ISO_DIR)/loader/entries/archiso-x86_64.conf
 
-	@genisoimage -l -r -J -V "ANARCHY_`date +%Y%m%d`" -b isolinux/isolinux.bin -no-emul-boot -boot-load-size 4 -boot-info-table -c isolinux/boot.cat -o ./anarchy-archlinux-`date +%Y.%m.%d`-dual.iso $(CUSTOM_ISO_DIR)
+	@genisoimage -l -r -J -V "$(LABEL)" -b isolinux/isolinux.bin -no-emul-boot -boot-load-size 4 -boot-info-table -c isolinux/boot.cat -o ./build/out/anarchy-archlinux-`date +%Y.%m.%d`-dual.iso $(CUSTOM_ISO_DIR)
+	@sudo chmod a+rw ./build/out/*
 
 	@echo "#############################"
 	@echo " *** Finished the new ISO!"
@@ -101,10 +113,11 @@ endif
 	@echo -n "Building base dirs..."
 	@mkdir -p $(ISO_MOUNT_DIR)
 	@mkdir -p $(CUSTOM_ISO_DIR)
+	@mkdir -p $(BUILD_DIR)/out
 	@echo " OK"
 
 	@echo "Mounting ISO"
-	@sudo mount -t iso9660 -o loop ./$(ISO) $(ISO_MOUNT_DIR)
+	@sudo mount -t iso9660 -o loop $(ISO) $(ISO_MOUNT_DIR)
 	@echo -n "Coping files..."
 	@cp -a $(ISO_MOUNT_DIR)/* $(CUSTOM_ISO_DIR)
 	@echo " OK"
