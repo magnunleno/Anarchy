@@ -30,8 +30,7 @@ build-32: _base
 	@echo "Mounting Root Image..."
 	@sudo mount $(ROOT_IMG32)/squashfs-root/root-image.fs $(ROOTFS_32)
 	@echo -n "Copying files..."
-	@sudo cp anarchy.sh $(ROOTFS_32)/root/
-	@sudo cp anarchy.sh $(ROOTFS_32)/home/arch/
+	@sudo cp src/* $(ROOTFS_32)/root/
 	@echo " OK"
 
 	@echo "Umounting image..."
@@ -64,8 +63,7 @@ build-64: _base
 	@echo "Mounting Root Image..."
 	@sudo mount $(ROOT_IMG64)/squashfs-root/root-image.fs $(ROOTFS_64)
 	@echo -n "Copying files..."
-	@sudo cp anarchy.sh $(ROOTFS_64)/root/
-	@sudo cp anarchy.sh $(ROOTFS_64)/home/arch/
+	@sudo cp src/* $(ROOTFS_64)/root/
 	@echo " OK"
 
 	@echo "Umounting image..."
