@@ -6,9 +6,6 @@ source anarchy.conf
 # Hostname
 echo "Configuring Hostname..."
 echo $HOSTN > /etc/hostname
-echo "Configuring Hosts..."
-cp /etc/hosts /etc/hosts.bkp
-sed -i 's/localhost$/localhost '$HOSTN'/' /etc/hosts
 
 # Keybord Layout
 echo "Configuring Keyboard layout..."
