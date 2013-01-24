@@ -137,6 +137,15 @@ function install_system
 # Load Keybord Layout
 loadkeys $KEYBOARD_LAYOUT
 
+while true; do
+    read -p "This script will erase all your '$HD' data. Do you want to proceed [y/n]? " yn
+    case $yn in
+        [Yy]* ) echo "We warned you..."; break;;
+        [Nn]* ) echo "OK. Bye..."; exit;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
+
 #### Partitioning
 initialize_harddrive
 make_partitions
