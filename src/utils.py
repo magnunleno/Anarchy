@@ -28,6 +28,33 @@ def restore_backup(bkp_name):
         fname = None
     return fname
 
+def comment_all_file(fname):
+    fd = open(fname, 'r')
+    lines = fd.readlines()
+    fd.close()
 
-# print create_backup("README.md.bkp")
-# print restore_backup("README.md.bkp")
+    fd = open(fname, 'w')
+    for line in lines:
+        if line[0] == "#":
+            fd.write(line)
+        else:
+            fd.write("#"+line)
+    fd.close()
+
+def uncomment_line(fname, target_line):
+    fd = open(fname, 'r')
+    lines = fd.readlines()
+    fd.close()
+
+    fd = open(fname, 'w')
+    for line in lines:
+        if target_line in line:
+            fd.write(line[1:])
+        else:
+            fd.write(line)
+    fd.close()
+
+# print create_backup("test/mirrorlist")
+# print restore_backup("test/mirrorlist.bkp")
+# comment_all_file("test/mirrorlist")
+# uncomment_line("test/mirrorlist", "Server = http://mirror.us.leaseweb.net/archlinux/$repo/os/$arch")

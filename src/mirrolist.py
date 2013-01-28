@@ -58,6 +58,7 @@ class Mirror(object):
                 mirrors[country].append(Mirror(rate, url))
             else:
                 mirrors[country] = [Mirror(rate, url)]
+        fd.close()
         return mirrors
 
 ########## For testing purposes ##########
