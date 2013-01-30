@@ -54,6 +54,21 @@ def uncomment_line(fname, target_line):
             fd.write(line)
     fd.close()
 
+def uncomment_many_lines(fname, target_lines):
+    fd = open(fname, 'r')
+    lines = fd.readlines()
+    fd.close()
+
+    fd = open(fname, 'w')
+    for line in lines:
+        for target_line in target_lines:
+            if target_line in line:
+                fd.write(line[1:])
+                break
+        else:
+            fd.write(line)
+    fd.close()
+
 # print create_backup("test/mirrorlist")
 # print restore_backup("test/mirrorlist.bkp")
 # comment_all_file("test/mirrorlist")

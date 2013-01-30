@@ -100,4 +100,6 @@ def run(dialog, repos = []):
             if dialog.yesno(_("Do you want to choose more mirrors?")) != dialog.DIALOG_OK:
                 break
 
+    utils.comment_all_file(MIRRORLIST)
+    utils.uncomment_many_lines(MIRRORLIST, [repo.url for repo in REPOS])
     return REPOS
