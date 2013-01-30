@@ -129,3 +129,10 @@ clean:
 	@rm -rf $(BUILD_DIR)/*
 	@echo "All done!"
 	@echo ""
+
+
+update-po:
+	@echo Updating Anarchy.pot file
+	@xgettext --language=Python --keyword=_ --output=locale/Anarchy.pot --from-code=UTF-8 `find . -name "*.py"`
+	@for lang in locale/*; do [ -d "$${lang}"  ] && echo "Updating $$lang" && msgmerge -U $$lang/LC_MESSAGES/Anarchy.po ./locale/Anarchy.pot; done
+
