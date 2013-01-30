@@ -1,0 +1,134 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Anarchy\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-01-29 22:58-0200\n"
+"PO-Revision-Date: 2013-01-29 18:05-0300\n"
+"Last-Translator: \n"
+"Language-Team: Magnun Leno\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#: src/view/main.py:22
+#, python-format
+msgid ""
+"This is the Anarchy Project installer v%(version)s, codename "
+"'%(codename)s'.\n"
+"\n"
+"We will guide you through the amazing Arch Linux installation Process.\n"
+"\n"
+"Please, read with attention every message, they were written carefully to "
+"guide you and teach you how to install this distribution."
+msgstr ""
+"Este é o instalador do Projeto Anarchy v%(version)s, codenome "
+"'%(codename)s'.\n"
+"\n"
+"Nos iremos te guiar através do incrível processo de instalação do Arch "
+"Linux.\n"
+"\n"
+"Por favor, leia com atenção todas as mensagens, elas foram escritas "
+"cuidadosamente para te guiar e te ensinar como instalar esta distribuição."
+
+#: src/view/main.py:29
+msgid "The Anarchy Team"
+msgstr "Time do Anarchy"
+
+#: src/view/main.py:32
+msgid "Welcome!"
+msgstr "Bem vindo!"
+
+#: src/view/main.py:58
+msgid "Anarchy Project"
+msgstr "Projeto Anarchy"
+
+#: src/view/main.py:59
+msgid "Back"
+msgstr "Voltar"
+
+#: src/view/main.py:60
+msgid "Okay"
+msgstr "OK"
+
+#: src/view/main.py:61
+msgid "Yes"
+msgstr ""
+
+#: src/view/main.py:62
+msgid "No"
+msgstr ""
+
+#: src/view/mirrorlist.py:17
+#, python-format
+msgid ""
+"Nice! Now that we have successfully prepared our Hard Drives, let's set up "
+"out mirrorlist.\n"
+"\n"
+" I've made a backup of your mirrorlist file at '%(bkp)s'"
+msgstr ""
+"Legal! Agora que nos preparamos os discos com sucesso, vamos configurar "
+"nossa lista de espelhos.\n"
+"\n"
+"Eu fiz uma cópia de segurança dos seu arquivo de espelhos em '%(bkp)s'"
+
+#: src/view/mirrorlist.py:20
+msgid "Mirrolist"
+msgstr "Lista de Espelhos"
+
+#: src/view/mirrorlist.py:27
+msgid ""
+"I've taken a look at your mirrorlist and found the following available "
+"countries:"
+msgstr ""
+"Eu dei uma olhada na sua lista de espelho e encontrei os seguintes países "
+"disponíveis:"
+
+#: src/view/mirrorlist.py:29
+#, python-format
+msgid "Mirrors: %i"
+msgstr "Espelhos: %i"
+
+#: src/view/mirrorlist.py:35
+msgid "Please chose at least one mirror!"
+msgstr ""
+
+#: src/view/mirrorlist.py:48
+#, python-format
+msgid "%(domain)s (Rate: %(rate).1f)"
+msgstr ""
+
+#: src/view/mirrorlist.py:54
+msgid "Mark your desired mirrors:"
+msgstr ""
+
+#: src/view/mirrorlist.py:56
+msgid "Choose your mirrors"
+msgstr ""
+
+#: src/view/mirrorlist.py:63
+msgid ""
+"Please select at least one mirror.To choose one mirror press SPACE.\n"
+"\n"
+"To return to the country list select CANCEL."
+msgstr ""
+
+#: src/view/mirrorlist.py:100
+msgid "Do you want to choose more mirrors?"
+msgstr ""
+
+#~ msgid "This is the Anarchy Project installer v0.2.0, codename '%s'"
+#~ msgstr "Este é o instalador do Projeto Anarchy v0.2.0, codenome '%s'."
+
+#~ msgid ""
+#~ "We will guide you through the amazing Arch Linux installation Process."
+#~ msgstr ""
+#~ "Nos iremos te guiar através do incrível processo de instalação do Arch "
+#~ "Linux."
