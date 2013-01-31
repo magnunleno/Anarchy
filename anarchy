@@ -1,12 +1,12 @@
 #!/usr/bin/env python2
 # encoding: utf-8
 
-from src.view import main
-from src import env
-
 import sys
+from src.anarchy import Anarchy
 
+test = False
 if '--test' in sys.argv:
-    env.set_test()
+    test = True
 
-main.run()
+anarchy = Anarchy()
+anarchy.run_dialogs(test=test)

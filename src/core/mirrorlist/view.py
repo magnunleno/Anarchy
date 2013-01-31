@@ -2,10 +2,9 @@
 # encoding: utf-8
 
 import dialog
-from os import system
-from src.modules import utils
-from src.modules import mirrorlist
-from src import env
+from src.core import utils
+from src.core.mirrorlist import mirrorlist
+from src.core import env
 
 _ = None
 MIRRORLIST = "/etc/pacman.d/mirrorlist"
