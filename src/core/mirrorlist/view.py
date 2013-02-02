@@ -26,12 +26,15 @@ def choose_country(dialog, mirrors, countries):
                 _("I've taken a look at your mirrorlist and found the "
             "following available countries:"),
             choices=[(c, _("Mirrors: %i")%(len(mirrors[c]))) for c in countries],
-            height=20,
-            #cancel="Back",
+            height=25,
+            menu_height=30,
+            title=_("Mirrorlist"),
             )
         if code in (dialog.DIALOG_CANCEL, dialog.DIALOG_ESC):
             if not REPOS:
-                dialog.msgbox(_("Please chose at least one mirror!"))
+                dialog.msgbox(_("Please chose at least one mirror!"),
+                        title=_("Attention"),
+                        )
                 continue
             return None
         return country
@@ -53,6 +56,7 @@ def check_mirrors_from_country(dialog, mirrors, country):
         (code, repos) = dialog.checklist(text=_("Mark your desired mirrors:"),
                 #height=15, width=54, list_height=7,
                 choices=choices, title=_("Choose your mirrors"),
+                list_height=10,
                 )
         if code in (dialog.DIALOG_CANCEL, dialog.DIALOG_ESC):
             return None
@@ -61,7 +65,8 @@ def check_mirrors_from_country(dialog, mirrors, country):
             dialog.msgbox(
                     _("Please select at least one mirror."
                     "To choose one mirror press SPACE.\n\n"
-                    "To return to the country list select CANCEL.")
+                    "To return to the country list select CANCEL."),
+                    title=_("Attention"),
                     )
             continue
         else:
