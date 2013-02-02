@@ -5,7 +5,13 @@ import dialog as Dialog
 from os import system
 
 from src.core.mirrorlist import view as mirrorlist
+from src.core.keymaps import view as keymaps
 from src.core import env
+
+MENU = (
+        ("Keyboard Layout", keymaps),
+        ("Select Mirrors", mirrorlist),
+        )
 
 class Anarchy(object):
     def run_dialogs(self, test=False):
@@ -26,6 +32,22 @@ class AnarchyDialogs(object):
             ])
 
         self.welcome(dialog)
+
+        choices = [(str(n+1).zfill(2), name) for (n, (name, entry)) in enumerate(MENU)]
+
+        while True:
+            (code, selected) = dialog.menu(
+                    _("This is the main window.\n\n"
+                    "Here are the installation steps."),
+                title=_("Main Menu"),
+                choices=choices,
+                width=40,
+                )
+            selected = int(selected) - 1
+            MENU[selected][1].run(dialog)
+
+        keymaps.run(dialog)
+        exit()
         # Loadkeys (/usr/share/kbd/keymaps/)
         # Partition
         # makefs
@@ -77,6 +99,7 @@ class AnarchyDialogs(object):
                 backtitle="Anarchy Project",
                 cancel="Exit",
                 ok_label="Select",
+                width=30,
                 )
             if code in (d.DIALOG_CANCEL, d.DIALOG_ESC):
                 exit(1)
