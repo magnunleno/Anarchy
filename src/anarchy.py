@@ -1,16 +1,19 @@
 #!/usr/bin/env python2
 # encoding: utf-8
 
-import dialog as Dialog
+import src.dialog as Dialog
 from os import system
 
 from src.core.mirrorlist import view as mirrorlist
 from src.core.keymaps import view as keymaps
+#from src.core.partition import view as partition
 from src.core import env
 
 MENU = (
         ("Keyboard Layout", keymaps),
         ("Select Mirrors", mirrorlist),
+        ("Select Mirrors", mirrorlist),
+        #("HD Partition", partition),
         )
 
 class Anarchy(object):

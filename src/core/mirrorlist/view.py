@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # encoding: utf-8
 
-import dialog
+from src import dialog
 from src.core import utils
 from src.core.mirrorlist import mirrorlist
 from src.core import env

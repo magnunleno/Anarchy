@@ -8,5 +8,9 @@ test = False
 if '--test' in sys.argv:
     test = True
 
-anarchy = Anarchy()
-anarchy.run_dialogs(test=test)
+try:
+    anarchy = Anarchy()
+    anarchy.run_dialogs(test=test)
+except KeyboardInterrupt:
+    print "\nOh my God! They killed Kenny! ...You bastards!"
+    exit(1)

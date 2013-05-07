@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # encoding: utf-8
 
-import dialog
+from src import dialog
 from src.core.keymaps import keymaps
 from src.core import env
 
