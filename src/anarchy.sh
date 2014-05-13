@@ -1,25 +1,27 @@
 #!/bin/bash
 # encoding: utf-8
 
-#################################################
-#            Warning                            #
-#                                               #
-#  This is script is TOTALLY outdated. We are   #
-# working hard to fix them and put this project #
-# up and running.                               #
-#                                               #
-#  If you're willing to help, please submit and #
-# push request.                                 #
-#                                               #
-# Happy hacking and long live Rock n' Roll      #
-#                                               #
-#################################################
-
 source anarchy.conf
 
 ##################################################
 #           functions                            #
 ##################################################
+print_line() {
+    printf "%$(tput cols)s\n"|tr ' ' '-'
+}
+
+function welcome
+{
+    clear
+    echo "Welcome to Anarchy install script"
+    print_line
+    echo "Requirements:"
+    echo "-> Run script as root user"
+    echo "-> Working internet connection"
+    print_line
+    read -e -sn 1 -p "Press enter to continue..."
+}
+
 function initialize_harddrive
 {
     echo "Initializing HD"
@@ -147,6 +149,7 @@ while true; do
 done
 
 #### Partitioning
+welcome
 initialize_harddrive
 make_partitions
 make_fs
